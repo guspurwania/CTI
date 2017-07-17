@@ -805,7 +805,7 @@ class Ion_auth_model extends CI_Model
 		else
 			$this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
 
-		return $return;
+		return $key;
 	}
 
 	/**
@@ -863,7 +863,7 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Mathew
 	 **/
-	public function register($identity, $password, $email, $additional_data = array(), $groups = array())
+	public function register($identity, $password, $email, $additional_data = array())
 	{
 		$this->trigger_events('pre_register');
 
@@ -874,22 +874,22 @@ class Ion_auth_model extends CI_Model
 			$this->set_error('account_creation_duplicate_identity');
 			return FALSE;
 		}
-		elseif ( !$this->config->item('default_group', 'ion_auth') && empty($groups) )
-		{
-			$this->set_error('account_creation_missing_default_group');
-			return FALSE;
-		}
+		// elseif ( !$this->config->item('default_group', 'ion_auth') && empty($groups) )
+		// {
+		// 	$this->set_error('account_creation_missing_default_group');
+		// 	return FALSE;
+		// }
 
 		// check if the default set in config exists in database
-		$query = $this->db->get_where($this->tables['groups'],array('name' => $this->config->item('default_group', 'ion_auth')),1)->row();
-		if( !isset($query->id) && empty($groups) )
-		{
-			$this->set_error('account_creation_invalid_default_group');
-			return FALSE;
-		}
+		// $query = $this->db->get_where($this->tables['groups'],array('name' => $this->config->item('default_group', 'ion_auth')),1)->row();
+		// if( !isset($query->id) && empty($groups) )
+		// {
+		// 	$this->set_error('account_creation_invalid_default_group');
+		// 	return FALSE;
+		// }
 
 		// capture default group details
-		$default_group = $query;
+		// $default_group = $query;
 
 		// IP Address
 		$ip_address = $this->_prepare_ip($this->input->ip_address());
@@ -902,8 +902,7 @@ class Ion_auth_model extends CI_Model
 		    'password'   => $password,
 		    'email'      => $email,
 		    'ip_address' => $ip_address,
-		    'created_on' => time(),
-		    'active'     => ($manual_activation === false ? 1 : 0)
+		    'created_on' => time()
 		);
 
 		if ($this->store_salt)
@@ -922,19 +921,19 @@ class Ion_auth_model extends CI_Model
 		$id = $this->db->insert_id();
 
 		// add in groups array if it doesn't exists and stop adding into default group if default group ids are set
-		if( isset($default_group->id) && empty($groups) )
-		{
-			$groups[] = $default_group->id;
-		}
+		// if( isset($default_group->id) && empty($groups) )
+		// {
+		// 	$groups[] = $default_group->id;
+		// }
 
-		if (!empty($groups))
-		{
-			// add to groups
-			foreach ($groups as $group)
-			{
-				$this->add_to_group($group, $id);
-			}
-		}
+		// if (!empty($groups))
+		// {
+		// 	// add to groups
+		// 	foreach ($groups as $group)
+		// 	{
+		// 		$this->add_to_group($group, $id);
+		// 	}
+		// }
 
 		$this->trigger_events('post_register');
 
@@ -959,7 +958,7 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$query = $this->db->select($this->identity_column . ', email, id, password, active, last_login')
+		$query = $this->db->select($this->identity_column . ', email, id, password, active, last_login, full_name, photo, status, group_id')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
 		    			  ->order_by('id', 'desc')
@@ -1719,11 +1718,12 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('pre_set_session');
 
 		$session_data = array(
-		    'identity'             => $user->{$this->identity_column},
-		    $this->identity_column             => $user->{$this->identity_column},
 		    'email'                => $user->email,
 		    'user_id'              => $user->id, //everyone likes to overwrite id so we'll use user_id
-		    'old_last_login'       => $user->last_login
+		    'old_last_login'       => $user->last_login,
+		    'full_name'			   => $user->full_name,
+		    'photo'			   	   => $user->photo,
+		    'group_id'			   => $user->group_id
 		);
 
 		$this->session->set_userdata($session_data);
@@ -1808,7 +1808,7 @@ class Ion_auth_model extends CI_Model
 
 		// get the user
 		$this->trigger_events('extra_where');
-		$query = $this->db->select($this->identity_column.', id, email, last_login')
+		$query = $this->db->select($this->identity_column.', id, email, last_login, full_name, photo, status, group_id')
 		                  ->where($this->identity_column, get_cookie($this->config->item('identity_cookie_name', 'ion_auth')))
 		                  ->where('remember_code', get_cookie($this->config->item('remember_cookie_name', 'ion_auth')))
 		                  ->limit(1)

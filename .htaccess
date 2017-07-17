@@ -1,6 +1,6 @@
-Options +FollowSymLinks
-RewriteEngine On
+RewriteEngine on
+RewriteBase /cti/
+RewriteCond $1 !^(index\.php|themes|robots\.txt|favicon\.ico)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 [L]
-Options -Indexes
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]

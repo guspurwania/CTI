@@ -1,0 +1,182 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+	<link href="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}{{ parent() }} Create Master Link {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<h3 class="page-title">
+	Edit Data Master Link <small>edit data master link</small>
+	</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="{{ base_url('masterlink') }}">Master link</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				Edit Data
+			</li>
+		</ul>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption font-red-sunglo">
+						<i class="fa fa-edit font-red-sunglo"></i>
+						<span class="caption-subject bold uppercase"> Edit Data</span>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<form role="form" action="{{ base_url() }}masterlink/update/{{ user.id }}" method="post" enctype="multipart/form-data">
+						{% if message is not empty %}
+			                <div class="alert alert-danger">{{ message|raw }}</div>
+			            {% endif %}
+						<h2>Data Personal</h2>
+						<div class="form-body">
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Masukkan Nama Lengkap Anda" value="{{ user.full_name }}" required>
+								<label for="form_control_1">Nama Lengkap</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda" value="{{ user.email }}" required>
+								<label for="form_control_1">Email</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nomor Telepon Anda" value="{{ user.phone }}" required>
+								<label for="form_control_1">Nomor Telepon</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="account_number" name="account_number" placeholder="Masukkan Nomor Rekening Anda" value="{{ user.account_number }}" required>
+								<label for="form_control_1">Nomor Rekening</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Masukkan Nama Bank" value="{{ user.bank_name }}" required>
+								<label for="form_control_1">Nama Bank</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="account_name" name="account_name" placeholder="Masukkan Nama Pemilik Rekening" value="{{ user.account_name }}" required>
+								<label for="form_control_1">Nama Pemilik Rekening</label>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="file" class="form-control" id="photo" name="photo">
+										<label for="form_control_1">Foto</label>
+										<a href="#" data-featherlight="{{ base_url() }}assets/images/{{ user.photo }}">(Lihat Foto)</a>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="file" class="form-control" id="ktp" name="ktp">
+										<label for="form_control_1">KTP (Kartu Tanda Penduduk)</label>
+										<a href="#" data-featherlight="{{ base_url() }}assets/images/{{ user.ktp }}">(Lihat KTP)</a>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="file" class="form-control" id="kk" name="kk">
+										<label for="form_control_1">KK (Kartu Keluarga)</label>
+										<a href="#" data-featherlight="{{ base_url() }}assets/images/{{ user.kk }}">(Lihat KK)</a>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-group form-md-line-input">
+								<textarea class="form-control" rows="3" id="address" name="address" placeholder=" Masukkan Alamat Lengkap Anda">{{ user.address }}</textarea>
+								<label for="form_control_1">Alamat</label>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="sub_district" name="sub_district" placeholder="Masukkan Kecamatan" value="{{ user.sub_district }}" required>
+										<label for="form_control_1">Kecamatan</label>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="district" name="district" placeholder="Masukkan Kabupaten" value="{{ user.district }}" required>
+										<label for="form_control_1">Kabupaten</label>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="province" name="province" placeholder="Masukkan Provinsi" value="{{ user.province }}" required>
+										<label for="form_control_1">Provinsi</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="job" name="job" placeholder="Masukkan Pekerjaan Anda" value="{{ user.job }}" required>
+								<label for="form_control_1">Pekerjaan</label>
+							</div>
+							<h2>Data Akun</h2><br />
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="username" name="identity" placeholder="Masukkan Username Anda" value="{{ user.username }}" required>
+								<label for="form_control_1">Username</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Kata Sandi Anda">
+								<label for="form_control_1">Kata Sandi</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Mohon Masukkan Ulang Kata Sandi Anda">
+								<label for="form_control_1">Ulang Kata Sandi</label>
+							</div>
+							{% if session.group_id == 1 %}
+							<div class="form-group form-md-radios">
+								<label>Status</label>
+								<div class="md-radio-inline">
+									<div class="md-radio">
+										<input type="radio" id="radio14" name="active" value="1" class="md-radiobtn" {% if user.active == 1 %}checked="checked"{% endif %}>
+										<label for="radio14">
+										<span></span>
+										<span class="check"></span>
+										<span class="box"></span>
+										Aktif </label>
+									</div>
+									<div class="md-radio">
+										<input type="radio" id="radio15" name="active" value="0" class="md-radiobtn" {% if user.active == 0 %}checked="checked"{% endif %}>
+										<label for="radio15">
+										<span></span>
+										<span class="check"></span>
+										<span class="box"></span>
+										Tidak Aktif </label>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							<div class="form-actions noborder">
+								<button type="submit" class="btn blue btn-lg">Simpan Data</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- END SAMPLE FORM PORTLET-->
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+{% endblock %}

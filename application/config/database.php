@@ -82,7 +82,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'sharetrans',
+	'database' => 'db_cti',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -101,8 +101,8 @@ $db['default'] = array(
 
 $capsule = new Capsule;
 $capsule->addConnection([
-	'driver'	=>	'mysql',
-	'host'		=>	$db['default']['hostname'],
+	'driver'	=> 'mysql',
+	'host'		=> $db['default']['hostname'],
 	'database'  => $db['default']['database'],
     'username'  => $db['default']['username'],
     'password'  => $db['default']['password'],

@@ -1,0 +1,228 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ base_url() }}assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+{% endblock %}
+
+{% block title %}{{ parent() }} Create Students {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<h3 class="page-title">
+	Tambah Data Mahasiswa <small>tambah data mahasiswa</small>
+	</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="{{ base_url('students') }}">Mahasiswa</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				Tambah Data
+			</li>
+		</ul>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption font-red-sunglo">
+						<i class="fa fa-plus font-red-sunglo"></i>
+						<span class="caption-subject bold uppercase"> Tambah Data</span>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<form role="form" action="{{ base_url() }}students/store" method="post">
+						{% if message is not empty %}
+			                <div class="alert alert-danger">{{ message|raw }}</div>
+			            {% endif %}
+						<div class="form-body">
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Lengkap Anda" value="{{ set_value('name') }}" required>
+								<label for="form_control_1">Nama Lengkap</label>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="place_of_birth" name="place_of_birth" placeholder="Masukkan Tempat Lahir Anda" value="{{ set_value('place_of_birth') }}" required>
+										<label for="form_control_1">Tempat Lahir</label>
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" id="date_of_birth" name="date_of_birth" placeholder="Masukkan Tanggal Lahir Anda" value="{{ set_value('date_of_birth')|date('d-m-Y') }}" required>
+										<label for="form_control_1">Tanggal Lahir</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-group form-md-line-input">
+								<select class="form-control" id="gender" name="gender">
+									<option value="Laki-Laki" {% if set_value('gender') == 'Laki-Laki' %}selected{% endif %}>Laki-Laki</option>
+									<option value="Perempuan"{% if set_value('gender') == 'Perempuan' %}selected{% endif %}>Perempuan</option>
+								</select>
+								<label for="form_control_1">Jenis Kelamin</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<select class="form-control" id="program_id" name="program_id">
+									{% for program in programs %}
+										<option value="{{ program.id }}" {% if set_value('program_id') == program.id %}selected{% endif %}>{{ program.name }}</option>
+									{% endfor %}
+								</select>
+								<label for="form_control_1">Program Studi</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<select class="form-control" id="religion" name="religion">
+									<option value="Islam" {% if set_value('religion') == 'Islam' %}selected{% endif %}>Islam</option>
+									<option value="Kristen" {% if set_value('religion') == 'Kristen' %}selected{% endif %}>Kristen</option>
+									<option value="Katolik" {% if set_value('religion') == 'Katolik' %}selected{% endif %}>Katolik</option>
+									<option value="Hindu" {% if set_value('religion') == 'Hindu' %}selected{% endif %}>Hindu</option>
+									<option value="Budha" {% if set_value('religion') == 'Budha' %}selected{% endif %}>Budha</option>
+									<option value="Konghucu" {% if set_value('religion') == 'Konghucu' %}selected{% endif %}>Konghucu</option>
+									<option value="Lainnya" {% if set_value('religion') == 'Lainnya' %}selected{% endif %}>Lainnya</option>
+								</select>
+								<label for="form_control_1">Agama</label>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="nik" name="nik" placeholder="Masukkan NIK Anda" value="{{ set_value('nik') }}" required>
+										<label for="form_control_1">NIK</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="nisn" name="nisn" placeholder="Masukkan NISN Anda" value="{{ set_value('nisn') }}" required>
+										<label for="form_control_1">NISN</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="npwp" name="npwp" placeholder="Masukkan NPWP Anda" value="{{ set_value('npwp') }}">
+										<label for="form_control_1">NPWP</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="nationality" name="nationality" placeholder="Masukkan Kewarganegaraan Anda" value="{{ set_value('nationality') }}" required>
+								<label for="form_control_1">Kewarganegaraan</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="street" name="street" placeholder="Masukkan Alamat Anda" value="{{ set_value('street') }}" required>
+								<label for="form_control_1">Alamat</label>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="rt" name="rt" placeholder="Masukkan RT Anda" value="{{ set_value('rt') }}">
+										<label for="form_control_1">RT</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="rw" name="rw" placeholder="Masukkan RW Anda" value="{{ set_value('rw') }}">
+										<label for="form_control_1">RW</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="village" name="village" placeholder="Masukkan Dusun/Desa Anda" value="{{ set_value('village') }}">
+										<label for="form_control_1">Dusun/Desa</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="row">
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="sub_district" name="sub_district" placeholder="Masukkan Kecamatan Anda" value="{{ set_value('sub_district') }}">
+										<label for="form_control_1">Kecamatan</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="district" name="district" placeholder="Masukkan Kabupaten/Kota Anda" value="{{ set_value('district') }}">
+										<label for="form_control_1">Kabupaten/Kota</label>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="province" name="province" placeholder="Masukkan Provinsi Anda" value="{{ set_value('province') }}">
+										<label for="form_control_1">Provinsi</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-group form-md-line-input">
+								<select class="form-control" id="type_of_stay" name="type_of_stay">
+									<option value="Bersama Orang Tua" {% if set_value('type_of_stay') == 'Bersama Orang Tua' %}selected{% endif %}>Bersama Orang Tua</option>
+									<option value="Wali" {% if set_value('type_of_stay') == 'Wali' %}selected{% endif %}>Wali</option>
+									<option value="Kost" {% if set_value('type_of_stay') == 'Kost' %}selected{% endif %}>Kost</option>
+									<option value="Asrama" {% if set_value('type_of_stay') == 'Asrama' %}selected{% endif %}>Asrama</option>
+									<option value="Panti Asuhan" {% if set_value('type_of_stay') == 'Panti Asuhan' %}selected{% endif %}>Panti Asuhan</option>
+									<option value="Lainnya" {% if set_value('type_of_stay') == 'Lainnya' %}selected{% endif %}>Lainnya</option>
+								</select>
+								<label for="form_control_1">Jenis Tempat Tinggal</label>
+							</div>
+							<div class="form-group form-md-line-input">
+								<select class="form-control" id="transportation" name="transportation">
+									<option value="Motor" {% if set_value('transportation') == 'Motor' %}selected{% endif %}>Motor</option>
+									<option value="Mobil" {% if set_value('transportation') == 'Mobil' %}selected{% endif %}>Mobil</option>
+									<option value="Bus" {% if set_value('transportation') == 'Bus' %}selected{% endif %}>Bus</option>
+									<option value="Lainnya" {% if set_value('transportation') == 'Lainnya' %}selected{% endif %}>Lainnya</option>
+								</select>
+								<label for="form_control_1">Alat Transportasi</label>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="phone" name="phone" placeholder="Masukkan Nomor Telepon Anda" value="{{ set_value('phone') }}">
+										<label for="form_control_1">Nomor Telepon</label>
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group form-md-line-input">
+										<input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda" value="{{ set_value('email') }}">
+										<label for="form_control_1">Email</label>
+									</div>
+								</div>
+							</div>
+							<br /><br />
+							<div class="form-actions noborder">
+								<button type="submit" class="btn blue btn-lg">Simpan Data</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- END SAMPLE FORM PORTLET-->
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ base_url() }}assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript">
+		$('.date-picker').datepicker({
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true
+        });
+	</script>
+{% endblock %}

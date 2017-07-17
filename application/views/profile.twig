@@ -1,0 +1,230 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+	<link href="{{ base_url() }}assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}{{ parent() }} Profile {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<h3 class="page-title">
+	Profile <small>pengaturan profile pengguna</small>
+	</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="{{ base_url('profile') }}">Profile</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-4 col-sm-4 col-sm-4 col-xs-12">
+			<div class="profile-sidebar">
+				<!-- PORTLET MAIN -->
+				<div class="portlet light profile-sidebar-portlet">
+					<!-- SIDEBAR USERPIC -->
+					<div class="profile-userpic">
+						<img src="{{ base_url('assets/images') }}/{{ session.photo }}" class="img-responsive" alt="">
+					</div>
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+							 {{ session.full_name }}
+						</div>
+						<div class="profile-usertitle-job">
+							 {% if session.group_id == 1 %}
+								Admin
+							 {% elseif session.group_id == 2 %}
+							 	Master Link
+							 {% else %}
+							 	Partner Link
+							 {% endif %}
+						</div>
+					</div>
+					<!-- END SIDEBAR USER TITLE -->
+					<!-- SIDEBAR BUTTONS -->
+					{# <div class="profile-userbuttons">
+						<button type="button" class="btn btn-circle green-haze btn-sm">Follow</button>
+						<button type="button" class="btn btn-circle btn-danger btn-sm">Message</button>
+					</div> #}
+					<!-- END SIDEBAR BUTTONS -->
+					<!-- SIDEBAR MENU -->
+					<div class="profile-usermenu">
+						<ul class="nav">
+							<li>
+								<a href="{{ base_url('dashboard') }}">
+								<i class="icon-home"></i>
+								Overview </a>
+							</li>
+							<li class="active">
+								<a href="{{ base_url('profile') }}">
+								<i class="icon-settings"></i>
+								Account Settings </a>
+							</li>
+						</ul>
+					</div>
+					<!-- END MENU -->
+				</div>
+				<!-- END PORTLET MAIN -->
+			</div>
+		</div>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<div class="profile-content">
+				<div class="row">
+					<div class="col-md-12">
+						{% if message is not empty %}
+			                <div class="alert alert-danger">{{ message|raw }}</div>
+			            {% endif %}
+			            {% if success is not empty %}
+			                <div class="alert alert-info">{{ success|raw }}</div>
+			            {% endif %}
+						<div class="portlet light">
+							<div class="portlet-title tabbable-line">
+								<div class="caption caption-md">
+									<i class="icon-globe theme-font hide"></i>
+									<span class="caption-subject font-blue-madison bold uppercase">Akun Profile</span>
+								</div>
+								<ul class="nav nav-tabs">
+									<li class="active">
+										<a href="#tab_1_1" data-toggle="tab">Info Personal</a>
+									</li>
+									<li>
+										<a href="#tab_1_2" data-toggle="tab">Ubah File</a>
+									</li>
+									<li>
+										<a href="#tab_1_3" data-toggle="tab">Ubah Password</a>
+									</li>
+								</ul>
+							</div>
+							<div class="portlet-body">
+								<div class="tab-content">
+									<!-- PERSONAL INFO TAB -->
+									<div class="tab-pane active" id="tab_1_1">
+										<form role="form" action="{{ base_url('profile/account/save') }}" method="post">
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Nama Lengkap</label>
+												<input type="text" placeholder="Nama Lengkap" class="form-control" name="full_name" value="{{ user.full_name }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Email</label>
+												<input type="email" placeholder="Email" class="form-control" name="email" value="{{ user.email }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Nomor Telepon</label>
+												<input type="text" placeholder="Nomor Telepon" class="form-control" name="phone" value="{{ user.phone }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Nomer Rekening</label>
+												<input type="text" placeholder="Nomor Rekening" class="form-control" name="account_number" value="{{ user.account_number }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Pemilik Rekening</label>
+												<input type="text" placeholder="Rekening Atas Nama" class="form-control" name="account_name" value="{{ user.account_name }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Nama Bank</label>
+												<input type="text" placeholder="Nama Bank" class="form-control" name="bank_name" value="{{ user.bank_name }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Alamat</label>
+												<textarea class="form-control" name="address" rows="3" placeholder="Alamat" required>{{ user.address }}</textarea>
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Kecamatan</label>
+												<input type="text" placeholder="Kecamatan" class="form-control" name="sub_district" value="{{ user.sub_district }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Kabupaten</label>
+												<input type="text" placeholder="Kabupaten" class="form-control" name="district" value="{{ user.district }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Provinsi</label>
+												<input type="text" placeholder="Provinsi" name="province" class="form-control" value="{{ user.province }}" required />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Pekerjaan</label>
+												<input type="text" placeholder="Pekerjaan" name="job" class="form-control" value="{{ user.job }}" required />
+											</div>
+											<div class="margiv-top-10">
+												<button type="submit" class="btn green-haze">
+												Save Changes </a>
+												{# <a href="javascript:;" class="btn default">
+												Cancel </a> #}
+											</div>
+										</form>
+									</div>
+									<!-- END PERSONAL INFO TAB -->
+									<!-- CHANGE AVATAR TAB -->
+									<div class="tab-pane" id="tab_1_2">
+										<p>
+											 Untuk melakukan perubahan pada Foto Profile, KTP (Kartu Tanda Penduduk) dan KK (Kartu Keluarga) silakan mengisi Form berikut.
+										</p>
+										<form action="{{ base_url('profile/file/save') }}" role="form" method="post" enctype="multipart/form-data">
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">Foto</label>
+												<input type="file" class="form-control" name="photo" />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">KTP</label>
+												<input type="file" class="form-control" name="ktp" />
+											</div>
+											<div class="form-group">
+												<label class="caption-subject font-blue-madison bold">KK</label>
+												<input type="file" class="form-control" name="kk" />
+											</div>
+											<div class="margin-top-10">
+												<button type="submit" class="btn green-haze">
+												Submit </a>
+											</div>
+										</form>
+									</div>
+									<!-- END CHANGE AVATAR TAB -->
+									<!-- CHANGE PASSWORD TAB -->
+									<div class="tab-pane" id="tab_1_3">
+										<form action="{{ base_url('profile/password/save') }}" method="post">
+											<div class="form-group">
+												<label class="control-label">Kata Sandi Anda</label>
+												<input type="password" name="old" id="old" class="form-control" minlength="8" maxlength="20" required />
+											</div>
+											<div class="form-group">
+												<label class="control-label">Kata Sandi Baru</label>
+												<input type="password" name="new" id="new" class="form-control" minlength="8" maxlength="20" required/>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Ulang Kata Sandi Baru</label>
+												<input type="password" name="new_confirm" id="new_confirm" class="form-control" minlength="8" maxlength="20" required/>
+											</div>
+											<div class="margin-top-10">
+												<button type="submit" class="btn green-haze">
+												Ubah Kata Sandi </a>
+											</div>
+										</form>
+									</div>
+									<!-- END CHANGE PASSWORD TAB -->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END PROFILE CONTENT -->
+		</div>
+	</div>
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}

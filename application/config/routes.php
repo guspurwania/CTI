@@ -49,17 +49,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'welcome/index';
 
-$route['user'] = 'user';
+$route['login'] = 'auth/login';
+$route['dashboard'] = 'welcome/index';
+$route['profile'] = 'profile/index';
+$route['profile/account/save'] = 'profile/update_account';
+$route['profile/file/save'] = 'profile/update_file';
+$route['profile/password/save'] = 'profile/update_password';
+
+// Masterlink
+$route['masterlink'] = 'masterlink/index';
+$route['masterlink/create'] = 'masterlink/create';
+$route['masterlink/store'] = 'masterlink/store';
+$route['masterlink/show/(:num)'] = 'masterlink/show/$1';
+$route['masterlink/edit/(:num)'] = 'masterlink/edit/$1';
+$route['masterlink/update/(:num)'] = 'masterlink/update/$1';
+$route['masterlink/delete/(:num)'] = 'masterlink/delete/$1';
+$route['masterlink/set_status'] = 'masterlink/set_status';
+
+// Partnerlink
+$route['partnerlink'] = 'partnerlink/index';
+$route['partnerlink/create'] = 'partnerlink/create';
+$route['partnerlink/store'] = 'partnerlink/store';
+$route['partnerlink/show/(:num)'] = 'partnerlink/show/$1';
+$route['partnerlink/edit/(:num)'] = 'partnerlink/edit/$1';
+$route['partnerlink/update/(:num)'] = 'partnerlink/update/$1';
+$route['partnerlink/delete/(:num)'] = 'partnerlink/delete/$1';
+$route['partnerlink/set_status'] = 'partnerlink/set_status';
+
+// Students
+$route['students'] = 'student/index';
+$route['students/create'] = 'student/create';
+$route['students/store'] = 'student/store';
+$route['students/show/(:num)'] = 'student/show/$1';
+$route['students/edit/(:num)'] = 'student/edit/$1';
+$route['students/update/(:num)'] = 'student/update/$1';
+$route['students/delete/(:num)'] = 'student/delete/$1';
+$route['students/set_status'] = 'student/set_status';
+
+// Transfer
+$route['transfer'] = 'transfer/index';
+$route['transfer/create'] = 'transfer/create';
+$route['transfer/store'] = 'transfer/store';
+$route['transfer/show/(:num)'] = 'transfer/show/$1';
+$route['transfer/edit/(:num)'] = 'transfer/edit/$1';
+$route['transfer/update/(:num)'] = 'transfer/update/$1';
+$route['transfer/delete/(:num)'] = 'transfer/delete/$1';
+$route['transfer/set_status'] = 'transfer/set_status';
+
+// Points
+$route['point'] = 'point/index';
+
+// Settings
+$route['settings'] = 'setting/index';
+$route['settings/edit/(:num)'] = 'setting/edit/$1';
+$route['settings/update/(:num)'] = 'setting/update/$1';
+
+//Parents
+$route['parents/store'] = 'family/store';
+$route['parents/update'] = 'family/update';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-/*
-| -------------------------------------------------------------------------
-| Sample REST API Routes
-| -------------------------------------------------------------------------
-*/
-$route['api/example/users/(:num)'] = 'api/example/users/id/$1'; 
-$route['api/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4';

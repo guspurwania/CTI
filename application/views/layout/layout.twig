@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	{% block head %}
+	<meta charset="utf-8"/>
+	<title>CTI TRAINING | 
+	{% block title %}
+	{% endblock %}
+	</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+	<meta content="" name="description"/>
+	<meta content="" name="author"/>
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+	<link href="{{ base_url() }}assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+	<!-- END PAGE LEVEL PLUGIN STYLES -->
+	<!-- BEGIN PAGE STYLES -->
+	<link href="{{ base_url() }}assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
+	<!-- END PAGE STYLES -->
+	<!-- BEGIN THEME STYLES -->
+	<!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+	<link href="{{ base_url() }}assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/admin/layout2/css/layout.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ base_url() }}assets/admin/layout2/css/themes/grey.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="{{ base_url() }}assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
+	<!-- END THEME STYLES -->
+	<link rel="shortcut icon" href="favicon.ico"/>
+{% endblock %}
+</head>
+<body class="page-boxed page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed-hide-logo">
+	<!-- BEGIN HEADER -->
+	<div class="page-header navbar navbar-fixed-top">
+		{% block navbar %}
+		<!-- BEGIN HEADER INNER -->
+		<div class="page-header-inner container">
+			<!-- BEGIN LOGO -->
+			<div class="page-logo">
+				<a href="index.html" style="text-decoration:none">
+				<h3 id="title" style="color:#FFF;">CTI Training</h3>
+				</a>
+				<div id="menutoggle" class="menu-toggler sidebar-toggler">
+					<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+				</div>
+			</div>
+			<!-- END LOGO -->
+			<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+			<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+			</a>
+			<!-- END RESPONSIVE MENU TOGGLER -->
+			
+			<!-- BEGIN PAGE TOP -->
+			<div class="page-top">
+				<!-- BEGIN HEADER SEARCH BOX -->
+				<!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+				{# <form class="search-form search-form-expanded" action="extra_search.html" method="GET">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..." name="query">
+						<span class="input-group-btn">
+						<a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
+						</span>
+					</div>
+				</form> #}
+				<!-- END HEADER SEARCH BOX -->
+				<!-- BEGIN TOP NAVIGATION MENU -->
+				<div class="top-menu">
+					<ul class="nav navbar-nav pull-right">
+						<li class="dropdown dropdown-user">
+							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+							<img alt="" class="img-circle" src="{{ base_url() }}assets/images/{{ session.photo }}"/>
+							<span class="username username-hide-on-mobile">
+							{{ session.full_name }} </span>
+							<i class="fa fa-angle-down"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-default">
+								<li>
+									<a href="{{ base_url('profile') }}">
+									<i class="icon-user"></i> My Profile </a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="{{ base_url('auth/logout') }}">
+									<i class="icon-key"></i> Log Out </a>
+								</li>
+							</ul>
+						</li>
+						<!-- END USER LOGIN DROPDOWN -->
+					</ul>
+				</div>
+				<!-- END TOP NAVIGATION MENU -->
+			</div>
+			<!-- END PAGE TOP -->
+		</div>
+		<!-- END HEADER INNER -->
+		{% endblock %}
+	</div>
+	<!-- END HEADER -->
+
+	<div class="clearfix">
+	</div>
+
+	<!-- BEGIN CONTAINER -->
+	<div class="container">
+		<div class="page-container">
+			<!-- BEGIN SIDEBAR -->
+			<div class="page-sidebar-wrapper">
+				<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+				<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+				<div class="page-sidebar navbar-collapse collapse">
+					{% block sidebar %}
+					<!-- BEGIN SIDEBAR MENU -->
+					<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+					<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+					<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+					<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+					<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+					<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+					<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+						<li class="start {% if url == 'dashboard' %}active{% endif %}">
+							<a href="{{ base_url('dashboard') }}">
+							<i class="icon-home"></i>
+							<span class="title">Dashboard</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% if session.group_id == 1 %}
+						<li class="start {% if url == 'masterlink' %}active{% endif %}">
+							<a href="{{ base_url('masterlink') }}">
+							<i class="fa fa-user"></i>
+							<span class="title">Master Link</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% endif %}
+						{% if session.group_id != 3 %}
+						<li class="start {% if url == 'partnerlink' %}active{% endif %}">
+							<a href="{{ base_url('partnerlink') }}">
+							<i class="fa fa-users"></i>
+							<span class="title">Partner Link</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% endif %}
+						<li class="start {% if url == 'students' %}active{% endif %}">
+							<a href="{{ base_url('students') }}">
+							<i class="fa fa-street-view"></i>
+							<span class="title">Mahasiswa</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% if session.group_id != 1 %}
+						<li class="start {% if url == 'point' %}active{% endif %}">
+							<a href="{{ base_url('point') }}">
+							<i class="fa fa-star"></i>
+							<span class="title">Point</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% endif %}
+						<li class="start {% if url == 'transfer' %}active{% endif %}">
+							<a href="{{ base_url('transfer') }}">
+							<i class="fa fa-send"></i>
+							<span class="title">Transfer</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% if session.group_id == 1 %}
+						<li class="start {% if url == 'settings' %}active{% endif %}">
+							<a href="{{ base_url('settings') }}">
+							<i class="fa fa-cog"></i>
+							<span class="title">Konfigurasi Point</span>
+							<span class="selected"></span>
+							</a>
+						</li>
+						{% endif %}
+					</ul>
+					<!-- END SIDEBAR MENU -->
+					{% endblock %}
+				</div>
+			</div>
+			<!-- END SIDEBAR -->
+			<!-- BEGIN CONTENT -->
+			<div class="page-content-wrapper">
+				<div class="page-content">
+					{% block content %}
+					
+					{% endblock %}
+				</div>
+			</div>
+			<!-- END CONTENT -->
+			<!-- BEGIN QUICK SIDEBAR -->
+			<!--Cooming Soon...-->
+			<!-- END QUICK SIDEBAR -->
+		</div>
+		<!-- END CONTAINER -->
+
+		<!-- BEGIN FOOTER -->
+		<div class="page-footer">
+			<div class="page-footer-inner">
+				 2017 &copy; Metronic | Developed by <a href="https://www.dartdev.id" target="_blank">Digital Artisans</a>.
+			</div>
+			<div class="scroll-to-top">
+				<i class="icon-arrow-up"></i>
+			</div>
+		</div>
+		<!-- END FOOTER -->
+	</div>
+
+<script src="{{ base_url() }}assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="{{ base_url() }}assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+{# <script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script> #}
+<script src="{{ base_url() }}assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+<script src="{{ base_url() }}assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ base_url() }}assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/admin/pages/scripts/index.js" type="text/javascript"></script>
+<script src="{{ base_url() }}assets/admin/pages/scripts/tasks.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+{% block script %}
+<script>
+jQuery(document).ready(function() {    
+   Metronic.init(); // init metronic core componets
+   Layout.init(); // init layout
+   Demo.init(); // init demo features 
+   Index.init();   
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+});
+
+let status = 1;
+
+$('#menutoggle').click(function(){
+	if(status == 1)
+	{
+		$('#title').hide();
+		status = 0;
+	}
+	else
+	{
+		$('#title').show();
+		status = 1;
+	}
+})
+
+</script>
+{% endblock %}
+<!-- END JAVASCRIPTS -->
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="{{ base_url() }}assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+{% endblock %}
+
+{% block title %}{{ parent() }} Data Wali {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<h3 class="page-title">
+	Data Wali <small>manajemen data wali</small>
+	</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="{{ base_url('students') }}">Mahasiswa</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				Data Wali
+			</li>
+		</ul>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption font-red-sunglo">
+						<i class="fa fa-user font-red-sunglo"></i>
+						<span class="caption-subject bold uppercase"> Data Orang Tua/Wali {{ student.name }}</span>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="tabbable-line">
+						<ul class="nav nav-tabs ">
+							{% for parent_category in parent_categories %}
+								<li {% if parent_categories[0].id == parent_category.id %} class="active" {% endif %}>
+									<a href="#{{ parent_category.name }}" data-toggle="tab">
+									{{ parent_category.name }} </a>
+								</li>
+							{% endfor %}
+						</ul>
+						<div class="tab-content">
+							{% for parent_category in parent_categories %}
+								<div class="tab-pane {% if parent_categories[0].id == parent_category.id %} active {% endif %}" id="{{ parent_category.name }}">
+									<br />
+									{% if students[parent_category.id]|length == 0 %}
+									<form role="form" action="{{ base_url() }}parents/store" method="post">
+									{% else %}
+									<form role="form" action="{{ base_url() }}parents/update" method="post">
+									{% endif %}
+										{% if message is not empty %}
+							                <div class="alert alert-danger">{{ message|raw }}</div>
+							            {% endif %}
+
+							            <div class="form-body">
+							            	<input type="hidden" name="id" value="{{ students[parent_category.id][0].id }}">
+							            	<input type="hidden" name="parent_category_id" value="{{ parent_category.id }}">
+							            	<input type="hidden" name="student_id" value="{{ student.id }}">
+							            	<div class="form-group form-md-line-input">
+												<input type="text" class="form-control" id="nik" name="nik" placeholder="Masukkan NIK {{ parent_category.name }} Anda" value="{{ students[parent_category.id][0].nik }}" required>
+												<label for="form_control_1">NIK</label>
+											</div>
+											<div class="form-group form-md-line-input">
+												<input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Lengkap {{ parent_category.name }} Anda" value="{{ students[parent_category.id][0].name }}" required>
+												<label for="form_control_1">Nama Lengkap</label>
+											</div>
+											<div class="form-group form-md-line-input">
+												<input type="text" class="form-control date-picker" data-date-format="dd-mm-yyyy" id="date_of_birth" name="date_of_birth" placeholder="Masukkan Tanggal Lahir {{ parent_category.name }} Anda" {% if students[parent_category.id]|length > 0 %} value="{{ students[parent_category.id][0].date_of_birth|date('d-m-Y') }}" {% endif %} required>
+												<label for="form_control_1">Tanggal Lahir</label>
+											</div>
+											<div class="form-group form-md-line-input">
+												<input type="text" class="form-control" id="education" name="education" placeholder="Masukkan Pendidikan Terakhir {{ parent_category.name }} Anda" value="{{ students[parent_category.id][0].education }}" required>
+												<label for="form_control_1">Pendidikan</label>
+											</div>
+											<div class="form-group form-md-line-input">
+												<input type="text" class="form-control" id="job" name="job" placeholder="Masukkan Pekerjaan {{ parent_category.name }} Anda" value="{{ students[parent_category.id][0].job }}" required>
+												<label for="form_control_1">Pekerjaan</label>
+											</div>
+											<div class="form-group form-md-line-input">
+												<select class="form-control" id="income" name="income">
+													<option value="Kurang dari Rp. 500.000">Kurang dari Rp. 500.000</option>
+													<option value="Rp. 500.000 - Rp. 1.000.000" {% if students[parent_category.id][0].income == "Rp. 500.000 - Rp. 1.000.000" %}selected{% endif %}>Rp. 500.000 - Rp. 1.000.000</option>
+
+													<option value="Rp. 1.000.000 - Rp. 2.000.000" {% if students[parent_category.id][0].income == "Rp. 1.000.000 - Rp. 2.000.000" %}selected{% endif %}>Rp. 1.000.000 - Rp. 2.000.000</option>
+
+													<option value="Rp. 2.000.000 - Rp. 5.000.000" {% if students[parent_category.id][0].income == "Rp. 2.000.000 - Rp. 5.000.000" %}selected{% endif %}>Rp. 2.000.000 - Rp. 5.000.000</option>
+
+													<option value="Rp. 5.000.000 - Rp. 20.000.000" {% if students[parent_category.id][0].income == "Rp. 5.000.000 - Rp. 20.000.000" %}selected{% endif %}>Rp. 5.000.000 - Rp. 20.000.000</option>
+
+													<option value="Lebih dari Rp. 20.000.000" {% if students[parent_category.id][0].income == "Lebih dari Rp. 20.000.000" %}selected{% endif %}>Lebih dari Rp. 20.000.000</option>
+												</select>
+												<label for="form_control_1">Penghasilan</label>
+											</div>
+											<div class="form-actions noborder">
+												<button type="submit" class="btn blue btn-lg">Simpan Data</button>
+											</div>
+							            </div>
+									</form>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END SAMPLE FORM PORTLET-->
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ base_url() }}assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript">
+		$('.date-picker').datepicker({
+            rtl: Metronic.isRTL(),
+            orientation: "left",
+            autoclose: true
+        });
+	</script>
+{% endblock %}

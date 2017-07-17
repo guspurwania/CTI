@@ -1,0 +1,231 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+	<link href="{{ base_url() }}assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}{{ parent() }} Dashboard {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<!-- BEGIN PAGE HEADER-->
+	<h3 class="page-title">
+	Dashboard</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			{# <li>
+				<i class="fa fa-home"></i>
+				<a href="index.html">Home</a>
+				<i class="fa fa-angle-right"></i>
+			</li> #}
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+			</li>
+		</ul>
+
+	</div>
+	<!-- END PAGE HEADER-->
+	<!-- BEGIN DASHBOARD STATS -->
+	<div class="row">
+		<div class="col-lg-4 col-sm-4 col-sm-4 col-xs-12">
+			<!-- BEGIN PROFILE SIDEBAR -->
+				<div class="profile-sidebar">
+					<!-- PORTLET MAIN -->
+					<div class="portlet light profile-sidebar-portlet">
+						<!-- SIDEBAR USERPIC -->
+						<div class="profile-userpic">
+							<img src="{{ base_url('assets/images') }}/{{ session.photo }}" class="img-responsive" alt="">
+						</div>
+						<!-- END SIDEBAR USERPIC -->
+						<!-- SIDEBAR USER TITLE -->
+						<div class="profile-usertitle">
+							<div class="profile-usertitle-name">
+								 {{ session.full_name }}
+							</div>
+							<div class="profile-usertitle-job">
+								 {% if session.group_id == 1 %}
+									Admin
+								 {% elseif session.group_id == 2 %}
+								 	Master Link
+								 {% else %}
+								 	Partner Link
+								 {% endif %}
+							</div>
+						</div>
+						<!-- END SIDEBAR USER TITLE -->
+						<!-- SIDEBAR BUTTONS -->
+						{# <div class="profile-userbuttons">
+							<button type="button" class="btn btn-circle green-haze btn-sm">Follow</button>
+							<button type="button" class="btn btn-circle btn-danger btn-sm">Message</button>
+						</div> #}
+						<!-- END SIDEBAR BUTTONS -->
+						<!-- SIDEBAR MENU -->
+						<div class="profile-usermenu">
+							<ul class="nav">
+								<li class="active">
+									<a href="{{ base_url('dashboard') }}">
+									<i class="icon-home"></i>
+									Overview </a>
+								</li>
+								<li>
+									<a href="{{ base_url('profile') }}">
+									<i class="icon-settings"></i>
+									Account Settings </a>
+								</li>
+							</ul>
+						</div>
+						<!-- END MENU -->
+					</div>
+					<!-- END PORTLET MAIN -->
+				</div>
+		</div>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<div class="row">
+				{% if session.group_id == 1 %}
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light blue-soft" href="{{ base_url('masterlink') }}">
+						<div class="visual">
+							<i class="fa fa-user"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{ masterlink }}
+							</div>
+							<div class="desc">
+								Master Link
+							</div>
+						</div>
+						</a>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light red-soft" href="{{ base_url('partnerlink') }}">
+						<div class="visual">
+							<i class="fa fa-users"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{ partnerlink }}
+							</div>
+							<div class="desc">
+								Partner Link
+							</div>
+						</div>
+						</a>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light green-soft" href="{{ base_url('students') }}">
+						<div class="visual">
+							<i class="fa fa-street-view"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{ students }}
+							</div>
+							<div class="desc">
+								Mahasiswa
+							</div>
+						</div>
+						</a>
+					</div>
+				{% elseif session.group_id == 2 %}
+					{# <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light blue-soft" href="javascript:;">
+						<div class="visual">
+							<i class="fa fa-star"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								IDR {{ user.point|number_format(2,',','.') }}
+							</div>
+							<div class="desc">
+								Point
+							</div>
+						</div>
+						</a>
+					</div> #}
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light red-soft" href="{{ base_url('partnerlink') }}">
+						<div class="visual">
+							<i class="fa fa-trophy"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{% if partnerlink %}
+									{{ partnerlink|length }}
+								{% else %}
+									{{ partnerlink }}
+								{% endif %}
+							</div>
+							<div class="desc">
+								Partner Link
+							</div>
+						</div>
+						</a>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light green-soft" href="{{ base_url('students') }}">
+						<div class="visual">
+							<i class="fa fa-street-view"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{ students }}
+							</div>
+							<div class="desc">
+								Mahasiswa
+							</div>
+						</div>
+						</a>
+					</div>
+				{% elseif session.group_id == 3 %}
+					{# <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light blue-soft" href="javascript:;">
+						<div class="visual">
+							<i class="fa fa-star"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								IDR {{ user.point|number_format(2,',','.') }}
+							</div>
+							<div class="desc">
+								Point
+							</div>
+						</div>
+						</a>
+					</div> #}
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<a class="dashboard-stat dashboard-stat-light green-soft" href="{{ base_url('students') }}">
+						<div class="visual">
+							<i class="fa fa-street-view"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								{{ students }}
+							</div>
+							<div class="desc">
+								Mahasiswa
+							</div>
+						</div>
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<!-- END DASHBOARD STATS -->
+	<div class="clearfix">
+	</div>
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'layout/layout.twig' %}
+
+{% block head %}
+	{{ parent() }}
+{% endblock %}
+
+{% block title %}{{ parent() }} Konfigurasi Point {% endblock %}
+
+{% block navbar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}	
+	<h3 class="page-title">
+	Konfigurasi Point <small>edit point</small>
+	</h3>
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="{{ base_url('dashboard') }}">Dashboard</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="{{ base_url('settings') }}">Konfigurasi Point</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				Edit Data
+			</li>
+		</ul>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption font-red-sunglo">
+						<i class="fa fa-edit font-red-sunglo"></i>
+						<span class="caption-subject bold uppercase"> Edit Point 
+							{% if setting.level == 1 %}
+								Level 1
+							{% else %}
+								Level 2
+							{% endif %}
+						</span>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<form role="form" action="{{ base_url() }}settings/update/{{ setting.id }}" method="post">
+						{% if message is not empty %}
+			                <div class="alert alert-danger">{{ message|raw }}</div>
+			            {% endif %}
+						<div class="form-body">
+							<div class="form-group form-md-line-input">
+								<input type="text" class="form-control" id="point" name="point" placeholder="Masukkan Point" value="{{ setting.point }}" required>
+								<label for="form_control_1">Point</label>
+							</div>
+							
+							<div class="form-actions noborder">
+								<button type="submit" class="btn blue btn-lg">Simpan Data</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- END SAMPLE FORM PORTLET-->
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+{% endblock %}
